@@ -78,13 +78,15 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+
 # IPython
 profile_default/
 ipython_config.py
 
-# Ignore Input Files
+# Ignore Input and Output Files
 input/
 output/
+.csv
 
 # Ignore specific files
 CPD_python.ipynb
