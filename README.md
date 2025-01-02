@@ -11,5 +11,5 @@ Image processing tools for FISH Project
 - [3D version](Cellpose_segmentation.ipynb)
 
 3. Map Patch Back and Solve conflict
-- [2D version](Cellpose_segmentation.ipynb)
+- 2D version
 - [3D version](Solve_conflict.ipynb)
