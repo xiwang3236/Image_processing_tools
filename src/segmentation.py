@@ -1,3 +1,4 @@
+import os
 import glob
 import tifffile as tiff
 from cellpose import denoise, models, io
