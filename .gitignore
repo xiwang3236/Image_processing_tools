@@ -86,6 +86,7 @@ ipython_config.py
 # Ignore Input and Output Files
 input/
 output/
+data/
 .csv
 
 # Ignore specific files
