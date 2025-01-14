@@ -16,6 +16,19 @@ from .reference_line_analysis import (
     find_AB_points,
     calculate_target_point,
 )
+from .map_coordinates import (
+    # Data loading and processing
+    read_csv_files,
+    
+    # Plotting functions
+    plot_3d_points,
+    
+    # Coordinate transformation and analysis
+    apply_offset_to_tile,
+    create_sub_maps_for6,
+    create_sub_maps_for4,
+    find_lowest_negative
+)
 
 # Version info
 __version__ = '1.0.0'
@@ -32,6 +45,18 @@ __all__ = [
     'TileAnalyzer',
     'TilePlotter',
     'find_AB_points',
-    'calculate_target_point'
+    'calculate_target_point',
+    
+    # Data loading and processing
+    'read_csv_files',
+    
+    # Plotting and visualization
+    'plot_3d_points',
+    
+    # Coordinate operations
+    'apply_offset_to_tile',
+    'create_sub_maps_for6',
+    'create_sub_maps_for4',
+    'find_lowest_negative'
 ]
 
