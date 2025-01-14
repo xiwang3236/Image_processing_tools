@@ -95,7 +95,7 @@ def apply_offset_to_tile(df, tile_number, vertices):
     df_offset['centroid-1'] = df_offset['centroid-1'] + offset_y
     df_offset['centroid-2'] = df_offset['centroid-2'] + offset_x
 
-    print(f"Offset applied to tile {tile_number}: x+{offset_x}, y+{offset_y}, z+{offset_z}")
+    print(f"Offset applied to tile {tile_number}: x add {offset_x}, y add {offset_y}, z add {offset_z}")
     return df_offset
 
 def create_sub_maps_for6(map_tiles: list, x_middle: float, y1_middle: float, y2_middle: float) -> dict:
@@ -157,8 +157,51 @@ def create_sub_maps_for6(map_tiles: list, x_middle: float, y1_middle: float, y2_
     
     return sub_mapped_dfs
 
+def create_sub_maps_for4(map_tiles: list, x_middle: float, y1_middle: float) -> dict:
+    """Create sub-maps for 4 tiles based on middle points."""
+    if len(map_tiles) != 4:
+        raise ValueError("Must provide exactly 4 tile DataFrames")
+        
+    sub_mapped_dfs = {}
+    
+    # Create global variables for each sub-map
+    global sub_map_tile1, sub_map_tile2, sub_map_tile3, sub_map_tile4
+    
+    # Filter and create global variables for each tile
+    sub_map_tile1 = map_tiles[0][  # Changed from 1 to 0
+        (map_tiles[0]['centroid-2'] < x_middle) & 
+        (map_tiles[0]['centroid-1'] < y1_middle)
+    ]
+    
+    sub_map_tile2 = map_tiles[1][  # Changed from 2 to 1
+        (map_tiles[1]['centroid-2'] > x_middle) & 
+        (map_tiles[1]['centroid-1'] < y1_middle)
+    ]
+    
+    sub_map_tile3 = map_tiles[2][  # Changed from 3 to 2
+        (map_tiles[2]['centroid-2'] > x_middle) & 
+        (map_tiles[2]['centroid-1'] > y1_middle) 
+    ]
+    
+    sub_map_tile4 = map_tiles[3][  # Changed from 4 to 3
+        (map_tiles[3]['centroid-2'] < x_middle) & 
+        (map_tiles[3]['centroid-1'] > y1_middle) 
+    ]
+    
 
-
+    # Store in dictionary
+    sub_mapped_dfs = {
+        'sub_map_tile1': sub_map_tile1,
+        'sub_map_tile2': sub_map_tile2,
+        'sub_map_tile3': sub_map_tile3,
+        'sub_map_tile4': sub_map_tile4,
+    }
+    
+    # Print summary
+    for df_name, df in sub_mapped_dfs.items():
+        print(f"{df_name}: {len(df)} points")
+    
+    return sub_mapped_dfs
 
 # To concatenate:
 def concatenate_maps(sub_mapped_dfs: dict) -> pd.DataFrame:
@@ -167,45 +210,6 @@ def concatenate_maps(sub_mapped_dfs: dict) -> pd.DataFrame:
     print(f"Total number of points after concatenation: {len(all_points)}")
     return all_points
 
-def create_sub_maps_for4(map_tile1, map_tile2, map_tile3, map_tile4,
-                        x_middle, y1_middle):
-    """Create sub-maps for 4 tiles based on middle points.
-    
-    Args:
-        map_tile1-4: Input DataFrames for each tile
-        x_middle: Middle point for x-axis division
-        y1_middle: Middle point for y-axis division
-        
-    Returns:
-        Dictionary containing filtered sub-maps for each tile
-    """
-    sub_mapped_dfs = {}
-    
-    sub_mapped_dfs['sub_map_tile1'] = map_tile1[
-        (map_tile1['centroid-2'] < x_middle) & 
-        (map_tile1['centroid-1'] < y1_middle)
-    ]
-    
-    sub_mapped_dfs['sub_map_tile2'] = map_tile2[
-        (map_tile2['centroid-2'] > x_middle) & 
-        (map_tile2['centroid-1'] < y1_middle)
-    ]
-    
-    sub_mapped_dfs['sub_map_tile3'] = map_tile3[
-        (map_tile3['centroid-2'] > x_middle) & 
-        (map_tile3['centroid-1'] > y1_middle) 
-    ]
-    
-    sub_mapped_dfs['sub_map_tile4'] = map_tile4[
-        (map_tile4['centroid-2'] < x_middle) & 
-        (map_tile4['centroid-1'] > y1_middle) 
-    ]
-    
-    # Print summary
-    for df_name, df in sub_mapped_dfs.items():
-        print(f"{df_name}: {len(df)} points")
-    
-    return sub_mapped_dfs
 
 def find_lowest_negative(vertices_3d: List[Tuple[float, float, float]]) -> List[float]:
    """Find the lowest negative value for each axis, if no negative values return 0.

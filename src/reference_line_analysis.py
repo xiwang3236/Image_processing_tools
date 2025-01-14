@@ -132,6 +132,9 @@ class TilePlotter:
         ax.legend()
         ax.set_aspect('equal')
         plt.grid(True)
+        plt.grid(True)
+        ax.xaxis.set_major_locator(plt.MultipleLocator(100))  # X-axis grid every 100 units
+        ax.yaxis.set_major_locator(plt.MultipleLocator(100))  # Y-axis grid every 100 units
         plt.show()
     
     @staticmethod
