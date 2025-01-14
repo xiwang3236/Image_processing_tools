@@ -87,6 +87,8 @@ ipython_config.py
 input/
 output/
 data/
+train/
+.tif
 .csv
 
 # Ignore specific files
